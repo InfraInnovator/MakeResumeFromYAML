@@ -1,0 +1,15 @@
+venv/
+__pycache__
+bin/
+lib/
+pyvenv.cfg
+
+# Build module directories
+build/
+dist/
+
+.DS_Store
+
+.vscode/
+
+resumeConvertFromYAML.egg-info/

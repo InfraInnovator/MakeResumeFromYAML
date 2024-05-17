@@ -1,0 +1,10 @@
+argparse
+nltk
+python-docx
+PyYAML
+reportlab
+scikit-learn
+sentence-transformers
+spacy
+termcolor
+wheel

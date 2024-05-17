@@ -1,0 +1,53 @@
+header:
+  name: JOHN DOE
+  subheader: Strategic IT Leader
+  phone: +1 555.555.5555
+  email: myemail@hotmail.com
+  linkedin: https://www.linkedin.com/in/myusername/
+
+professional_experience:
+  - company: ABC, LLC
+    location: Remote
+    position: IT Director
+    dates: January 2018 - Present
+    description: Strategically built and planned secure infrastructure.
+    duties:
+      - Led software scaling, ensuring top-tier speed and security
+      - Migrated DNS from AWS Route 53 RackSpace
+      - Managed AWS infrastructure (ECS, RDS, EC2)
+      - Mentored on best practices in security and infrastructure
+
+  - company: DEF, Inc
+    location: Remote
+    position: Operations Manager
+    dates: January 2002 - January 2018
+    description: Established and managed the operational and security objectives.
+    duties:
+      - Analyzed large datasets using Pandas and NumPy.
+      - Established monitoring systems (Status.IO, DataDog, PagerDuty)
+
+certifications:
+  certs:
+    - CompTIA A+
+
+memberships:
+  pdf_page_break_before: true
+  docx_page_break_before: true
+  memberships:
+    - Linux Foundation
+
+education:
+  items:
+    - B.S. in Computer Science
+
+summary_of_qualifications:
+  qualifications:
+    - Pioneered industry-first products and spearheaded innovative technology strategies.
+    - Seasoned IT leader with two decades of expertise in crafting high-availability systems.
+
+skills:
+  list:
+    - Leadership
+    - Mentoring
+    - Strategic planning
+    - Developing roadmaps
