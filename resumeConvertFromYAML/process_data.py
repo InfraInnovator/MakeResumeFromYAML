@@ -66,7 +66,9 @@ def process_data(input_file, output_file_path, output_format='pdf'):
 
         return data
     except Exception as e:
+        # Catch any exceptions that occur during processing
         print(f"An error occurred: {e}")
+        print("Please check the input file and try again.")
         return None
 
 

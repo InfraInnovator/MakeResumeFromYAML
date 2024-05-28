@@ -134,6 +134,14 @@ def generate_pdf(data, output_file):
                             spaceAfter=normal_text_space_after,
                             fontName=font_italic)
 
+    # Technologies used
+    job_description_style_technologies_used = ParagraphStyle('body',
+                            leftIndent=0.25*inch,
+                            fontSize=normal_text_font_size,
+                            # leading=normal_text_leading,
+                            spaceAfter=normal_text_space_after,
+                            fontName=font_italic)
+
     # Bullet points
     bullet_style = ParagraphStyle('Bullet',
                             leftIndent=0.25*inch,
@@ -246,6 +254,7 @@ def generate_pdf(data, output_file):
             story.append(Paragraph(job['description'], job_description_style))
 
 
+        # Bullet Points
         bullet_points = []
 
         # Bullet Points
@@ -256,6 +265,23 @@ def generate_pdf(data, output_file):
 
         story.append(KeepTogether(bullet_points))
         story.append(section_spacer())
+
+
+        # Check if the technologies used key exists and has a value at index 0 (not empty)
+        if job.get('technologies_used') and job['technologies_used']:
+
+
+            # Get the list items for the technologies used key
+            technologies_used = job['technologies_used']
+
+            if technologies_used:
+                # Create a string of technologies used that is comma-separated and starts with Technologies Used:
+                tech_used = ', '.join(technologies_used)
+                story.append(Paragraph(f"<u>Technology Stack</u>: {tech_used}", job_description_style_technologies_used))
+
+            else:
+                # Don't write anything, including a new line
+                pass
 
     # Define a dictionary of handlers for each section
     section_handlers = {
