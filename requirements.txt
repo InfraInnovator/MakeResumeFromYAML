@@ -8,3 +8,4 @@ sentence-transformers
 spacy
 termcolor
 wheel
+wordcloud
