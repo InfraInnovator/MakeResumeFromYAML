@@ -7,19 +7,19 @@ from .modules.generate_docx import generate_docx
 import yaml
 from .modules.generate_WordCloud import generate_wordcloud
 
-def output_data(data, output, output_format):
+def output_data(data, output, output_format_type):
     if isinstance(output, str):
-        if output_format == "pdf":
-            generate_pdf(data, output)
-        elif output_format == "docx":
+        if output_format_type == "pdf":
+            generate_pdf(data, output, style="default")
+        elif output_format_type == "docx":
             generate_docx(data, output)
-        elif output_format == "wordcloud":
+        elif output_format_type == "wordcloud":
             generate_wordcloud(data, output)
         else:
             raise ValueError("Output file must be a .pdf, .docx, or .png file.")
     elif hasattr(output, 'write'):
-        if output_format == "pdf":
-            generate_pdf(data, output)
+        if output_format_type == "pdf":
+            generate_pdf(data, output, style="default")
         else:
             raise ValueError("Unsupported output format for file-like object.")
         return data, output
@@ -40,8 +40,8 @@ def load_data(input_file):
         data = yaml.safe_load(input_file)
     return data
 
-def process_data(input_file, output_file_path, output_format='pdf'):
-    print(f"Generating resume in {output_format} format...")
+def process_data(input_file, output_file_path, output_format_type='pdf'):
+    print(f"Generating resume in {output_format_type} format...")
     if input_file is None:
         print("Please provide an input file")
         return
@@ -50,7 +50,7 @@ def process_data(input_file, output_file_path, output_format='pdf'):
         if data is None:
             print("No data loaded from file")
             return
-        output_data(data, output_file_path, output_format)
+        output_data(data, output_file_path, output_format_type)
         return data
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -61,16 +61,24 @@ def main():
     parser = argparse.ArgumentParser(description="Generate a resume from a YAML file.")
     parser.add_argument("-i", "--input_file", help="Path to the YAML file containing resume data.")
     parser.add_argument("-o", "--output_file", help="Path to the output file. Default is output.pdf.", default="resumes_output/output.pdf")
+    parser.add_argument("-t", "--output_format_type", help="Output format. Options: pdf, docx, wordcloud. Default is pdf.", default="pdf")
+    parser.add_argument("-s", "--style", help="Style for PDF output. Options: default, modern. Default is default.", default="default")
 
     args = parser.parse_args()
 
-    output_format = 'pdf'
-    if args.output_file.endswith('.docx'):
-        output_format = 'docx'
-    elif args.output_file.endswith('.png'):
-        output_format = 'wordcloud'
+    # Check if the user specified an output format, if not read format from output file extension
+    output_format_type = args.output_format_type
+    if output_format_type is None:
+        if args.output_file.endswith('.docx'):
+            output_format_type = 'docx'
+        elif args.output_file.endswith('.workdcloud'):
+            # Rename the output file to .png
+            args.output_file = args.output_file.replace('.wordcloud', '.png')
+            output_format_type = 'wordcloud'
+        else:
+            output_format_type = 'pdf'
 
-    process_data(args.input_file, args.output_file, output_format)
+    process_data(args.input_file, args.output_file, output_format_type)
 
 if __name__ == '__main__':
     main()
