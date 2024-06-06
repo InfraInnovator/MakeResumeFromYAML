@@ -1,5 +1,6 @@
 argparse
 nltk
+pytest
 python-docx
 PyYAML
 reportlab
