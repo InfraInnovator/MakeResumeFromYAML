@@ -103,7 +103,7 @@ def generate(data, output_file, shared_state=None):
     # Example usage to store data to shared_state
     # shared_state['docx_generated'] = True
 
-    print("Generating word cloud...")
+    print("Generating Word .docx file...")
 
     # Create a new Document
     doc = Document()

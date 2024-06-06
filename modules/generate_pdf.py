@@ -23,7 +23,7 @@ def generate(data, output_file, shared_state=None):
     # Example usage to store data to shared_state
     # shared_state['pdf_generated'] = True
 
-    print("Generating word cloud...")
+    print("Generating PDF .pdf file...")
 
     # Define the page margins
     top_margin = 0.3*inch

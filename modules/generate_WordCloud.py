@@ -13,7 +13,7 @@ def generate(data, output_file, shared_state=None):
     # Example usage to store data to shared_state
     # shared_state['wordcloud_generated'] = True
 
-    print("Generating word cloud...")
+    print("Generating wordcloud .png file...")
 
     # Collect all text from the resume
     resume_text = ""
