@@ -1,15 +1,20 @@
 from docx import Document
-from docx.enum.dml import MSO_THEME_COLOR_INDEX
-from docx.enum.style import WD_STYLE_TYPE
-from docx.enum.table import WD_ALIGN_VERTICAL, WD_TABLE_ALIGNMENT
-from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_PARAGRAPH_ALIGNMENT
-from docx.oxml import OxmlElement, parse_xml
-from docx.oxml.ns import qn
 import docx.shared
 from docx.shared import Inches, Pt, RGBColor
+from docx.enum.text import WD_PARAGRAPH_ALIGNMENT, WD_ALIGN_PARAGRAPH
+from docx.enum.table import WD_ALIGN_VERTICAL, WD_TABLE_ALIGNMENT
+from docx.enum.style import WD_STYLE_TYPE
+from docx.enum.dml import MSO_THEME_COLOR_INDEX
+from docx.oxml import OxmlElement, parse_xml
+from docx.oxml.ns import qn
+import argparse
+import json
 
 
 def add_horizontal_line(doc):
+    """
+    Adds a horizontal line to the given document.
+    """
     p = doc.add_paragraph()
     p_format = p.paragraph_format
     p_format.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
@@ -18,23 +23,20 @@ def add_horizontal_line(doc):
 
     # Create a new border element
     p_borders = OxmlElement('w:pBdr')
-
-    # Create top border element
     top_bdr = OxmlElement('w:top')
     top_bdr.set(qn('w:val'), 'single')
-    top_bdr.set(qn('w:sz'), '12')  # This determines the thickness of the line
-    top_bdr.set(qn('w:space'), '1')
-    top_bdr.set(qn('w:color'), '000000')  # Black color
-
-    # Add top border to paragraph borders
+    top_bdr.set(qn('w:sz'), '12')  # thickness of the line
+    top_bdr.set(qn('w:color'), '000000')  # black color
     p_borders.append(top_bdr)
-
-    # Add borders to paragraph
     p._element.get_or_add_pPr().append(p_borders)
 
     # Add a non-breaking space to the paragraph to ensure the border is visible
     run = p.add_run('\u00A0')
     run.font.color.rgb = RGBColor(255, 255, 255)  # Set font color to white to hide the non-breaking space
+
+def add_page_break(doc):
+    """Adds a page break to the document."""
+    doc.add_page_break()
 
 def add_horizontal_line_to_header(header, width):
     table = header.add_table(rows=1, cols=1, width=width)
@@ -55,10 +57,6 @@ def add_horizontal_line_to_header(header, width):
 
     cell.text = ""
     cell.vertical_alignment = WD_ALIGN_VERTICAL.CENTER
-
-
-def add_page_break(doc):
-    doc.add_page_break()
 
 def add_hyperlink(paragraph, text, url):
     """
@@ -95,7 +93,7 @@ def add_hyperlink(paragraph, text, url):
 
     return hyperlink
 
-def generate_docx(data, output_file):
+def generate(data, output_file):
     # Create a new Document
     doc = Document()
 
@@ -364,3 +362,16 @@ def generate_docx(data, output_file):
 
     # Save the document
     doc.save(output_file)
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Generate a Word document from JSON data.')
+    parser.add_argument('data_file', help='Path to the JSON data file')
+    parser.add_argument('output_file', help='Path to the output file where the Word document will be saved')
+    args = parser.parse_args()
+
+    # Load data from the specified JSON file
+    with open(args.data_file, 'r') as file:
+        data = json.load(file)
+
+    # Generate the document
+    generate(data, args.output_file)

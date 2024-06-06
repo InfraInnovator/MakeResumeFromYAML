@@ -1,3 +1,5 @@
+# generate_pdf.py
+
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
@@ -5,12 +7,13 @@ from reportlab.lib.units import inch
 from reportlab.lib.colors import black
 from reportlab.platypus.flowables import KeepTogether, HRFlowable
 from reportlab.platypus import Table, TableStyle, PageBreak
+import json
 
 
 def section_spacer():
     return Spacer(1, 12)
 
-def generate_pdf(data, output_file):
+def generate(data, output_file):
     # Define the page margins
     top_margin = 0.3*inch
     left_margin = 0.35*inch
@@ -336,3 +339,19 @@ def generate_pdf(data, output_file):
             story.append(section_spacer())
 
     doc.build(story) # Build the PDF
+
+
+def main():
+    parser = argparse.ArgumentParser(description='Generate a PDF from JSON data.')
+    parser.add_argument('data_file', help='Path to the JSON data file')
+    parser.add_argument('output_file', help='Path to the output PDF file')
+
+    args = parser.parse_args()
+
+    with open(args.data_file, 'r') as file:
+        data = json.load(file)
+
+    generate_pdf(data, args.output_file)
+
+if __name__ == "__main__":
+    main()
