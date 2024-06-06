@@ -13,7 +13,18 @@ import json
 def section_spacer():
     return Spacer(1, 12)
 
-def generate(data, output_file):
+def generate(data, output_file, shared_state=None):
+
+    # Check if shared state has specific data
+    if 'keywords' in shared_state:
+        # Process with these keywords
+        print("Keywords available for use:", shared_state['keywords'])
+
+    # Example usage to store data to shared_state
+    # shared_state['pdf_generated'] = True
+
+    print("Generating word cloud...")
+
     # Define the page margins
     top_margin = 0.3*inch
     left_margin = 0.35*inch

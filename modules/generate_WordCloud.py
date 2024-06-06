@@ -3,7 +3,16 @@
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 
-def generate(data, output_file):
+def generate(data, output_file, shared_state=None):
+
+    # Check if shared state has specific data
+    if 'keywords' in shared_state:
+        # Process with these keywords
+        print("Keywords available for use:", shared_state['keywords'])
+
+    # Example usage to store data to shared_state
+    # shared_state['wordcloud_generated'] = True
+
     print("Generating word cloud...")
 
     # Collect all text from the resume
