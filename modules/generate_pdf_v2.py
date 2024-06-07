@@ -32,7 +32,6 @@ def main():
     parser = argparse.ArgumentParser(description='Generate a PDF from YAML data using a template.')
     parser.add_argument('data_file', help='Path to the YAML data file')
     parser.add_argument('output_file', help='Path to the output PDF file')
-    parser.add_argument('--template', default='modules/generate_pdf_v2_templates/default_template.html', help='Path to the Jinja2 HTML template file')
 
     args = parser.parse_args()
 

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Resume</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 1in;
+        }
+        h1, h2, h3, h4 {
+            color: #2E4053;
+        }
+        h1 {
+            font-size: 24pt;
+            text-align: center;
+        }
+        h2 {
+            font-size: 18pt;
+            margin-top: 0.5in;
+            border-bottom: 2px solid #2E4053;
+        }
+        h3 {
+            font-size: 14pt;
+            margin-bottom: 0.2in;
+        }
+        p, li {
+            font-size: 12pt;
+            line-height: 1.5;
+        }
+        .contact {
+            text-align: center;
+            font-size: 12pt;
+            margin-bottom: 0.5in;
+        }
+        .section {
+            margin-bottom: 0.5in;
+        }
+        .job-title {
+            font-weight: bold;
+        }
+        .job-duration {
+            font-style: italic;
+        }
+        ul {
+            list-style-type: square;
+            padding-left: 1em;
+        }
+        .technology-stack {
+            font-size: 12pt;
+            font-style: italic;
+            margin-top: 0.2in;
+        }
+        .education, .certifications, .memberships {
+            page-break-before: always;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ header.name }}</h1>
+    <div class="contact">
+        <p>{{ header.phone }} | <a href="mailto:{{ header.email }}">{{ header.email }}</a></p>
+        <p><a href="{{ header.linkedin }}">{{ header.linkedin }}</a> | <a href="{{ header.github }}">{{ header.github }}</a></p>
+    </div>
+
+    <h2>PROFESSIONAL EXPERIENCE</h2>
+    {% for job in professional_experience %}
+        <div class="section">
+            <h3>{{ job.company }} - {{ job.location }} ({{ job.contract }})</h3>
+            <p class="job-title">{{ job.position }}</p>
+            <p class="job-duration">{{ job.dates }}</p>
+            <ul>
+                {% for duty in job.duties %}
+                    <li>{{ duty }}</li>
+                {% endfor %}
+            </ul>
+            <p class="technology-stack">Technology Stack: {{ job.technology_stack }}</p>
+        </div>
+    {% endfor %}
+
+    <h2>CERTIFICATIONS AND AWARDS</h2>
+    <ul>
+        {% for certification in certifications %}
+            <li>{{ certification }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>PROFESSIONAL MEMBERSHIPS</h2>
+    <ul>
+        {% for membership in memberships %}
+            <li>{{ membership }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>EDUCATION</h2>
+    <p>{{ education.degree }}</p>
+    <p>{{ education.institution }}</p>
+
+    <h2>SUMMARY OF QUALIFICATIONS</h2>
+    <ul>
+        {% for qualification in qualifications %}
+            <li>{{ qualification }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>SKILLS & INTERESTS</h2>
+    <ul>
+        <li><strong>Skills:</strong> {{ skills }}</li>
+        <li><strong>Interests:</strong> {{ interests }}</li>
+    </ul>
+</body>
+</html>

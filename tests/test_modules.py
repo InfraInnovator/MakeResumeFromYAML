@@ -26,3 +26,9 @@ def test_output_file_generation_wordCloud(tmp_path):
     output_file = tmp_path / "output.png"
     sys.argv = ['program_name', '-i', './_ResumeInput/sample_resume.yaml', '-o', str(output_file), '-m', 'generate_wordcloud']
     main()  # main() will read from sys.argv
+
+def test_output_file_generation_pdf_v2(tmp_path):
+    """Test if the output file is generated."""
+    output_file = tmp_path / "output.pdf"
+    sys.argv = ['program_name', '-i', './_ResumeInput/sample_resume.yaml', '-o', str(output_file), '-m', 'generate_pdf_v2', '--template', 'modules/generate_pdf_v2_templates/standard.html']
+    main()  # main() will read from sys.argv
