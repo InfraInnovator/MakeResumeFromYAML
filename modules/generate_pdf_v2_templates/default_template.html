@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0.5in; }
+        h1 { font-size: 24pt; text-align: center; }
+        h2 { font-size: 18pt; color: gray; }
+        p { font-size: 12pt; line-height: 1.5; }
+    </style>
+</head>
+<body>
+    <h1>{{ header.name }}</h1>
+    <h2>{{ header.subheader }}</h2>
+    <p>{{ header.email }}</p>
+    <p>{{ header.phone }}</p>
+    <p>{{ header.linkedin }}</p>
+    <p>{{ header.github }}</p>
+
+    <h2>Professional Experience</h2>
+    {% for job in professional_experience %}
+        <h3>{{ job.company }} - {{ job.position }}</h3>
+        <p>{{ job.location }} ({{ job.dates }})</p>
+        <ul>
+            {% for duty in job.duties %}
+                <li>{{ duty }}</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+
+    <h2>Skills</h2>
+    <ul>
+        {% for skill in skills %}
+            <li>{{ skill }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

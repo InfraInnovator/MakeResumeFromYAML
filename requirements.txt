@@ -1,8 +1,10 @@
 argparse
+jinja2
 nltk
 pytest
 python-docx
 PyYAML
+reportlab
 reportlab
 scikit-learn
 sentence-transformers
@@ -10,3 +12,4 @@ spacy
 termcolor
 wheel
 wordcloud
+xhtml2pdf

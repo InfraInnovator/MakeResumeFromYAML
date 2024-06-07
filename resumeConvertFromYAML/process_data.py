@@ -21,7 +21,8 @@ def main():
     parser.add_argument("-l", "--list_modules", action="store_true", help="List available modules.")
     parser.add_argument("-i", "--input_file", help="Path to the YAML file containing data.", required=False)
     parser.add_argument("-o", "--output_file", help="Path to the output file.", required=False)
-    parser.add_argument("-m", "--module", action='append', help="Modules to use for processing.", required=False)
+    parser.add_argument("-m", "--module", action="append", help="Modules to use for processing.", required=False)
+    parser.add_argument("-t", "--template", default="modules/generate_pdf_v2_templates/default_template.html", help="Path to the Jinja2 HTML template file")
 
     args, unknown = parser.parse_known_args()  # Parse known args first
 
@@ -62,7 +63,11 @@ def main():
             if hasattr(module, 'generate'):
                 if 'generate_preview' not in args.module and not args.output_file:
                     parser.error("The output file is required for modules other than generate_preview.")
-                module.generate(data, args.output_file, shared_state)  # Pass shared state to each module
+                # Pass the template file path as a string to the generate function
+                if 'generate_pdf_v2' in args.module:
+                    module.generate(data, args.output_file, args.template)  # Pass template_file to generate_pdf_v2
+                else:
+                    module.generate(data, args.output_file, shared_state)  # Pass shared state to other modules
             else:
                 print(f"Module {module_name} is not properly configured to process data.")
         else:
