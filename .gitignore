@@ -13,3 +13,7 @@ dist/
 .vscode/
 
 resumeConvertFromYAML.egg-info/
+
+# Pytest
+.pytest_cache/
+
