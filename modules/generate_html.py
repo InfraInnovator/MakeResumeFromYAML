@@ -5,7 +5,7 @@ import os
 
 def generate(data, output_file, template_file):
     print(f"Generating HTML using template: {template_file}")
-    
+
     # Ensure template_file is a string
     if not isinstance(template_file, str):
         raise ValueError(f"Expected template_file to be a string, got {type(template_file)} instead")
