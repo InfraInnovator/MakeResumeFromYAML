@@ -37,3 +37,9 @@ def test_output_file_generation_pdf_v2(tmp_path):
     output_file = tmp_path / "output.pdf"
     sys.argv = ['program_name', '-i', './_ResumeInput/sample_resume.yaml', '-o', str(output_file), '-m', 'generate_pdf_v2', '--template', './modules/generate_pdf_v2_templates/default_template.html']
     main()  # main() will read from sys.argv
+
+def test_output_file_generation_pdf_v3(tmp_path):
+    """Test if the output file is generated."""
+    output_file = tmp_path / "output.pdf"
+    sys.argv = ['program_name', '-i', './_ResumeInput/sample_resume.yaml', '-o', str(output_file), '-m', 'generate_pdf_v3', '--template', './modules/generate_pdf_v3_templates/default_template.html']
+    main()  # main() will read from sys.argv
