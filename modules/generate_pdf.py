@@ -318,7 +318,7 @@ def generate(data, output_file, shared_state=None):
         ) + [
             Paragraph("EDUCATION", section_header_style),
             HRFlowable(width="100%", thickness=2, color=black),
-            *[Paragraph(school, education_style) for school in section_data['items']]
+            *[Paragraph(school, education_style) for school in section_data['education_entries']]
         ],
         'certifications': lambda section_data: (
             [PageBreak()] if section_data.get('pdf_page_break_before') else []

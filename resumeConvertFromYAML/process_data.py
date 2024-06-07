@@ -65,9 +65,11 @@ def main():
                     parser.error("The output file is required for modules other than generate_preview.")
                 # Pass the template file path as a string to the generate function
                 if 'generate_pdf_v2' in args.module:
-                    module.generate(data, args.output_file, args.template)  # Pass template_file to generate_pdf_v2
+                    module.generate(data, args.output_file, args.template) # Pass template_file to generate_pdf_v2
+                elif 'generate_html' in args.module:
+                    module.generate(data, args.output_file, args.template) # Pass template_file to generate_html
                 else:
-                    module.generate(data, args.output_file, shared_state)  # Pass shared state to other modules
+                    module.generate(data, args.output_file, shared_state) # Pass shared state to other modules
             else:
                 print(f"Module {module_name} is not properly configured to process data.")
         else:

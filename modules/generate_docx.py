@@ -341,7 +341,7 @@ def generate(data, output_file, shared_state=None):
         ) + [
             doc.add_paragraph("EDUCATION", style=section_heading_style),
             add_horizontal_line(doc),
-            *[doc.add_paragraph(school, style=list_bullet_style) for school in section_data['items']]
+            *[doc.add_paragraph(school, style=list_bullet_style) for school in section_data['education_entries']]
         ],
         'certifications': lambda section_data: (
             [add_page_break(doc)] if section_data.get('docx_page_break_before') else []
