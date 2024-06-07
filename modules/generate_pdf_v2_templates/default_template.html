@@ -76,7 +76,7 @@
     <h2>{{ header.subheader }}</h2>
     <div class="contact">
         <p>{{ header.phone }} | <a href="mailto:{{ header.email }}">{{ header.email }}</a></p>
-        <p><a href="{{ header.linkedin }}">{{ header.linkedin }}</a> | <a href="{{ header.github }}">{{ header.github }}</a></p>
+        <p>{% if header.linkedin %}<a href="{{ header.linkedin }}">{{ header.linkedin }}</a>{% endif %} | {% if header.github %} <a href="{{ header.github }}">{{ header.github }}</a>{% endif %}</p>
     </div>
 
     <div class="section">
@@ -101,50 +101,62 @@
         {% endfor %}
     </div>
 
-    <div class="section certifications">
-        <div class="section-title">CERTIFICATIONS AND AWARDS</div>
-        <ul>
-            {% for certification in certifications.certs %}
-                <li>{{ certification }}</li>
-            {% endfor %}
-        </ul>
-    </div>
+    {% if certifications.certs %}
+        <div class="section certifications">
+                <div class="section-title">CERTIFICATIONS AND AWARDS</div>
+                <ul>
+                    {% for certification in certifications.certs %}
+                        <li>{{ certification }}</li>
+                    {% endfor %}
+                </ul>
+        </div>
+    {% endif %}
 
-    <div class="section memberships">
-        <div class="section-title">PROFESSIONAL MEMBERSHIPS</div>
-        <ul>
-            {% for membership in memberships.memberships %}
-                <li>{{ membership }}</li>
-            {% endfor %}
-        </ul>
-    </div>
+    {% if memberships.memberships %}
+        <div class="section memberships">
+            <div class="section-title">PROFESSIONAL MEMBERSHIPS</div>
+            <ul>
+                {% for membership in memberships.memberships %}
+                    <li>{{ membership }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
 
-    <div class="section education">
-        <div class="section-title">EDUCATION</div>
-        <ul>
-            {% for item in education.education_entries %}
-                <li>{{ item }}</li>
-            {% endfor %}
-        </ul>
-    </div>
+    {% if education.education_entries %}
+        <div class="section education">
+            <div class="section-title">EDUCATION</div>
+            <ul>
+                {% for item in education.education_entries %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
 
-    <div class="section summary">
-        <div class="section-title">SUMMARY OF QUALIFICATIONS</div>
-        <ul>
-            {% for qualification in summary_of_qualifications.qualifications %}
-                <li>{{ qualification }}</li>
-            {% endfor %}
-        </ul>
-    </div>
+    {% if summary_of_qualifications.qualifications %}
+        <div class="section summary">
+            <div class="section-title">SUMMARY OF QUALIFICATIONS</div>
+            <ul>
+                {% for qualification in summary_of_qualifications.qualifications %}
+                    <li>{{ qualification }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
 
-    <div class="section">
-        <div class="section-title">SKILLS & INTERESTS</div>
-        <ul>
-            <li><strong>Skills:</strong> {{ skills.skills | join(', ') }}</li>
-            {% if skills.interests %}
-            <li><strong>Interests:</strong> {{ skills.interests | join(', ') }}</li>
-            {% endif %}
-        </ul>
-    </div>
+    {% if skills.skills %}
+        <div class="section">
+            <div class="section-title">SKILLS & INTERESTS</div>
+            <ul>
+                <li><strong>Skills:</strong> {{ skills.skills | join(', ') }}</li>
+                {% if skills.interests %}
+                <li><strong>Interests:</strong> {{ skills.interests | join(', ') }}</li>
+                {% endif %}
+            </ul>
+        </div>
+    {% endif %}
+
+
 </body>
 </html>

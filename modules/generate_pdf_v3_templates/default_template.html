@@ -79,6 +79,17 @@
         <p>{% if header.linkedin %}<a href="{{ header.linkedin }}">{{ header.linkedin }}</a>{% endif %} | {% if header.github %} <a href="{{ header.github }}">{{ header.github }}</a>{% endif %}</p>
     </div>
 
+    {% if summary_of_qualifications.qualifications %}
+        <div class="section summary">
+            <div class="section-title">SUMMARY OF QUALIFICATIONS</div>
+            <ul>
+                {% for qualification in summary_of_qualifications.qualifications %}
+                    <li>{{ qualification }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
     <div class="section">
         <div class="section-title">PROFESSIONAL EXPERIENCE</div>
         {% for job in professional_experience %}
@@ -129,17 +140,6 @@
             <ul>
                 {% for item in education.education_entries %}
                     <li>{{ item }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% endif %}
-
-    {% if summary_of_qualifications.qualifications %}
-        <div class="section summary">
-            <div class="section-title">SUMMARY OF QUALIFICATIONS</div>
-            <ul>
-                {% for qualification in summary_of_qualifications.qualifications %}
-                    <li>{{ qualification }}</li>
                 {% endfor %}
             </ul>
         </div>

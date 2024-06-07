@@ -1,10 +1,8 @@
-# generate_pdf_v2.py
-
 import argparse
 import yaml
 from jinja2 import Environment, FileSystemLoader
-from xhtml2pdf import pisa
 import os
+from weasyprint import HTML
 
 def generate(data, output_file, template_file):
     print(f"Generating PDF using template: {template_file}")
@@ -21,19 +19,16 @@ def generate(data, output_file, template_file):
     # Render template with data
     html_content = template.render(data)
 
-    # Create PDF
-    with open(output_file, "w+b") as result_file:
-        pisa_status = pisa.CreatePDF(html_content, dest=result_file)
+    # Create PDF using WeasyPrint
+    HTML(string=html_content).write_pdf(output_file)
 
-    if pisa_status.err:
-        print("Error creating PDF")
-    else:
-        print(f"PDF generated successfully: {output_file}")
+    print(f"PDF generated successfully: {output_file}")
 
 def main():
     parser = argparse.ArgumentParser(description='Generate a PDF from YAML data using a template.')
     parser.add_argument('data_file', help='Path to the YAML data file')
     parser.add_argument('output_file', help='Path to the output PDF file')
+    parser.add_argument('--template', default='modules/generate_pdf_v2_templates/default_template.html', help='Path to the Jinja2 HTML template file')
 
     args = parser.parse_args()
 

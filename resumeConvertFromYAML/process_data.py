@@ -66,6 +66,8 @@ def main():
                 # Pass the template file path as a string to the generate function
                 if 'generate_pdf_v2' in args.module:
                     module.generate(data, args.output_file, args.template) # Pass template_file to generate_pdf_v2
+                elif 'generate_pdf_v3' in args.module:
+                    module.generate(data, args.output_file, args.template)
                 elif 'generate_html' in args.module:
                     module.generate(data, args.output_file, args.template) # Pass template_file to generate_html
                 else:
