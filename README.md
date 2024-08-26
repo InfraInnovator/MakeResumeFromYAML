@@ -21,7 +21,7 @@ pip install -r requirements.txt
 
 ## Usage
 ```bash
-python -m resumeConvertFromYAML.process_data -i ./_resumes/sample_resume.yaml -o ./_resumes_output/sample_resume.pdf
+python -m resumeConvertFromYAML.process_data -i ./_ResumeInput/sample_resume.yaml -o ./_ResumeOutput/sample_resume.pdf
 ```
 
 # Building a module
