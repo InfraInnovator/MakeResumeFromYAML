@@ -87,6 +87,15 @@ def generate(data, output_file, shared_state=None):
                             alignment=align_center,
                             fontName=font_bold)
 
+    # Subheader - Pronounds
+    header_subheader_pronouns_style = ParagraphStyle('header4',
+                            fontSize=subheader_font_size,
+                            leading=subheading_leading,
+                            spaceAfter=subheading_space_after,
+                            alignment=align_center,
+                            fontName=font_regular)
+
+
     # Contact info
     header_contact_style = ParagraphStyle('body',
                                           fontSize=header_contact_font_size,
@@ -210,14 +219,28 @@ def generate(data, output_file, shared_state=None):
     # Header content
     story.append(Paragraph(data['header']['name'], header_name_style))
 
+    # Add a line return followed by the pronouns if they exist
+    if data['header'].get('pronouns'):
+        story.append(Paragraph(data['header']['pronouns'], header_subheader_pronouns_style))
+
     # Subheader
     if data['header'].get('subheader'):
         story.append(Paragraph(data['header']['subheader'], header_subheader_style))
 
+    contact_info_fields = [
+    data['header'].get('phone', ''),
+    f"<a href='mailto:{data['header'].get('email', '')}'>{data['header'].get('email', '')}</a>",
+    data['header'].get('location', '')
+    ]
 
+    # Filter out empty strings and join with ' | '
+    contact_info = ' | '.join(filter(bool, contact_info_fields))
 
-    # Contact info
-    contact_info = f"{data['header']['phone']} | <a href='mailto:{data['header']['email']}'>{data['header']['email']}</a>"
+    # # Contact info
+    # contact_info = f"{data['header']['phone']} | " \
+    #                f"<a href='mailto:{data['header']['email']}'>{data['header']['email']}</a> | " \
+    #                f"{data['header']['location']}"
+
     # Contact links
     links = []
     if data['header'].get('linkedin'):

@@ -4,6 +4,8 @@ header:
   phone: +1 555.555.5555
   email: myemail@hotmail.com
   linkedin: https://www.linkedin.com/in/myusername/
+  location: Middle of Nowhere, USA
+  pronouns: they/them
 
 professional_experience:
   - company: ABC, LLC
