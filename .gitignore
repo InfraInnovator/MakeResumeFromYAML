@@ -17,3 +17,6 @@ resumeConvertFromYAML.egg-info/
 # Pytest
 .pytest_cache/
 
+
+*.code-workspace
+

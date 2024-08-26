@@ -11,6 +11,10 @@ professional_experience:
     position: IT Director
     dates: January 2018 - Present
     description: Strategically built and planned secure infrastructure.
+    technologies_used:
+      - AWS Services (S3, Route 53, ALB, Secrets)
+      - Confluence
+      - JIRA
     duties:
       - Led software scaling, ensuring top-tier speed and security
       - Migrated DNS from AWS Route 53 RackSpace
@@ -22,6 +26,10 @@ professional_experience:
     position: Operations Manager
     dates: January 2002 - January 2018
     description: Established and managed the operational and security objectives.
+    technologies_used:
+      - AWS Services (CloudFormation, S3, EC2, Route 53, ALB, Secrets, CloudWatch)
+      - JIRA
+      - Confluence
     duties:
       - Analyzed large datasets using Pandas and NumPy.
       - Established monitoring systems (Status.IO, DataDog, PagerDuty)
