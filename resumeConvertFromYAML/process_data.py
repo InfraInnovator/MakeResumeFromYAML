@@ -1,3 +1,5 @@
+# process_data.py
+
 import argparse
 import importlib
 import pkgutil
@@ -37,8 +39,8 @@ def main():
                 print(f"  {name}")
         return
 
-    if not args.module or not args.input_file:
-        parser.error("The following arguments are required: -i/--input_file, -m/--module")
+    # if not args.module or not args.input_file:
+    #     parser.error("The following arguments are required: -i/--input_file, -m/--module")
 
     # Let each module add its specific arguments if necessary
     for name, mod in modules.items():
