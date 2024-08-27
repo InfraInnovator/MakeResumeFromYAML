@@ -133,6 +133,20 @@ def generate(data, output_file, shared_state=None):
     header_subheader_style.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
     header_subheader_style.paragraph_format.line_spacing = 1.0
 
+    # Header Styles - Pronouns
+    header_pronouns_style = doc.styles.add_style('PronounsStyle', WD_STYLE_TYPE.PARAGRAPH)
+    header_pronouns_style.font.size = Pt(11)
+    header_pronouns_style.font.italic = False
+    header_pronouns_style.font.bold = False
+    header_pronouns_style.font.color.rgb = RGBColor(19, 41, 75)
+    header_pronouns_style.paragraph_format.space_before = Pt(0)
+    header_pronouns_style.paragraph_format.space_after = Pt(0)
+    header_pronouns_style.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    header_pronouns_style.paragraph_format.line_spacing = 1.0
+
+
+
+
     # Header Styles - Contact
     contact_style_name = 'ContactStyle'
     header_contact_style = doc.styles.add_style(contact_style_name, WD_STYLE_TYPE.PARAGRAPH)
@@ -208,6 +222,7 @@ def generate(data, output_file, shared_state=None):
 
     # Access the header of the document
     section = doc.sections[0]
+    header = section.header
 
     # Remove the top margin
     section.top_margin = Pt(0)
@@ -216,36 +231,59 @@ def generate(data, output_file, shared_state=None):
     section.left_margin = Inches(0.5)
     section.right_margin = Inches(0.5)
 
-    header = section.header
-
     # Ensure the header has enough paragraphs
     while len(header.paragraphs) < 3:
         header.add_paragraph()
 
-    # Change data['header']['name'] to have upper case first letters for each word
-    #data['header']['name'] = data['header']['name'].title()
-
     # Add content to the header
-    header.paragraphs[0].add_run(data['header']['name'])
+    header.paragraphs[0].text = data['header']['name']
     header.paragraphs[0].style = header_name_style
 
-    if data['header'].get('subheader'):
-        header.paragraphs[1].add_run(data['header']['subheader'])
-        header.paragraphs[1].style = header_subheader_style
+    # Add pronouns to the header immediately under the name
+    if data['header'].get('pronouns'):
+        header.paragraphs[1].text = data['header']['pronouns']
+        header.paragraphs[1].style = header_pronouns_style
 
+    # Add subheader to the header under the pronouns
+    if data['header'].get('subheader'):
+        header.paragraphs[2].text = data['header']['subheader']
+        header.paragraphs[2].style = header_subheader_style
     # Add contact info to the header
-    contact_paragraph = header.add_paragraph()
-    add_hyperlink(contact_paragraph, data['header']['phone'], "tel:" + data['header']['phone'])
-    contact_paragraph.add_run(" | ")
-    add_hyperlink(contact_paragraph, data['header']['email'], "mailto:" + data['header']['email'])
-    contact_paragraph.add_run(" | ")
-    add_hyperlink(contact_paragraph, data['header']['linkedin'], data['header']['linkedin'])
+    contact_paragraph = doc.add_paragraph()
+
+    # Collecting contact fields only if they exist
+    contact_fields = []
+
+    if data['header'].get('phone'):
+        contact_fields.append(f"tel:{data['header']['phone']}")
+    if data['header'].get('email'):
+        contact_fields.append(f"mailto:{data['header']['email']}")
+    if data['header'].get('linkedin'):
+        contact_fields.append(f"linkedin:{data['header']['linkedin'].strip()}")  # Ensure to strip any extra whitespace
+    if data['header'].get('location'):
+        contact_fields.append(f"location:{data['header']['location']}")
+
+    # Adding links and separating with '|'
+    for i, field in enumerate(contact_fields):
+        # Only add hyperlink if the field is a phone, email, or LinkedIn URL
+        if 'tel:' in field or 'mailto:' in field or 'linkedin:' in field:
+            # Correct handling for the full URL
+            url = field.split(':', 1)[1]  # Use split with maxsplit=1 to handle URLs correctly
+            if 'linkedin:' in field and not url.startswith('http'):
+                url = 'https://' + url  # Prepend 'https://' if missing
+            add_hyperlink(contact_paragraph, url, url)
+        else:
+            contact_paragraph.add_run(field.split(':', 1)[1])  # Use split with maxsplit=1 for correct text display
+        if i < len(contact_fields) - 1:
+            contact_paragraph.add_run(" | ")
+
     contact_paragraph.style = header_contact_style
 
-    available_width = section.page_width - section.left_margin - section.right_margin - docx.shared.Inches(.5)  # Subtracting 2 inches (1 inch from each side)
+    available_width = section.page_width - section.left_margin - section.right_margin - docx.shared.Inches(.5)  # Margin calculation
 
     # Add the horizontal line to the header
     add_horizontal_line_to_header(header, available_width)
+
 
     for paragraph in header.paragraphs:
         if not paragraph.text.strip():

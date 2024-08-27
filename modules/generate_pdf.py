@@ -236,11 +236,6 @@ def generate(data, output_file, shared_state=None):
     # Filter out empty strings and join with ' | '
     contact_info = ' | '.join(filter(bool, contact_info_fields))
 
-    # # Contact info
-    # contact_info = f"{data['header']['phone']} | " \
-    #                f"<a href='mailto:{data['header']['email']}'>{data['header']['email']}</a> | " \
-    #                f"{data['header']['location']}"
-
     # Contact links
     links = []
     if data['header'].get('linkedin'):
