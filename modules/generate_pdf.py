@@ -8,6 +8,7 @@ from reportlab.lib.colors import black
 from reportlab.platypus.flowables import KeepTogether, HRFlowable
 from reportlab.platypus import Table, TableStyle, PageBreak
 import json
+import argparse
 
 
 def section_spacer():
@@ -364,13 +365,23 @@ def generate(data, output_file, shared_state=None):
     # Iterate over the keys in the data and generate the corresponding sections
     for key in data:
         if key in section_handlers:
-            story.extend(section_handlers[key](data[key]))
-            story.append(section_spacer())
+            section_content = section_handlers[key](data[key])
+            story.extend(section_content)
 
-    doc.build(story) # Build the PDF
+            # Only add a spacer if the next section exists
+            if key != list(data.keys())[-1]:
+                story.append(section_spacer())
+
+    # Remove any trailing empty elements (optional but recommended)
+    while story and isinstance(story[-1], (Spacer, HRFlowable)):
+        story.pop()
+
+    # Build the PDF
+    doc.build(story)
 
 
 def main():
+
     parser = argparse.ArgumentParser(description='Generate a PDF from JSON data.')
     parser.add_argument('data_file', help='Path to the JSON data file')
     parser.add_argument('output_file', help='Path to the output PDF file')
