@@ -220,10 +220,6 @@ def generate(data, output_file, shared_state=None):
     # Header content
     story.append(Paragraph(data['header']['name'], header_name_style))
 
-    # Add a line return followed by the pronouns if they exist
-    if data['header'].get('pronouns'):
-        story.append(Paragraph(data['header']['pronouns'], header_subheader_pronouns_style))
-
     # Subheader
     if data['header'].get('subheader'):
         story.append(Paragraph(data['header']['subheader'], header_subheader_style))
@@ -231,7 +227,8 @@ def generate(data, output_file, shared_state=None):
     contact_info_fields = [
     data['header'].get('phone', ''),
     f"<a href='mailto:{data['header'].get('email', '')}'>{data['header'].get('email', '')}</a>",
-    data['header'].get('location', '')
+    data['header'].get('location', ''),
+    data['header'].get('pronouns', '')
     ]
 
     # Filter out empty strings and join with ' | '
